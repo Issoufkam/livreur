@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="text-center">
+            <h1 class="welcome-message" id="text">Bienvenue sur notre site!</h1>
+            <p class="lead" id="subtitle" style="display: none;">Entrez les informations de l'utilisateur pour effectuer la recherche.</p>
+
+            <form method="post" action="{% url 'recherche_utilisateur' %}" class="mt-3">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </form>
+
+            {% if error_message %}
+                <p class="text-danger mt-2">{{ error_message }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function typeEffect(element, speed) {
+            var text = element.innerHTML;
+            element.innerHTML = "";
+            
+            var i = 0;
+            var timer = setInterval(function() {
+                if (i < text.length) {
+                    element.append(text.charAt(i));
+                    i++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
+        }
+
+        // Application
+        var speed = 75;
+        var h1 = document.getElementById('text');
+        var p = document.getElementById('subtitle');
+        var delay = h1.innerHTML.length * speed + speed;
+
+        // Type effect pour le titre
+        typeEffect(h1, speed);
+
+        // Type effect pour le sous-titre
+        setTimeout(function(){
+            p.style.display = "inline-block";
+            typeEffect(p, speed);
+        }, delay);
+    </script>
+{% endblock %}
