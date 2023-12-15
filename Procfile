@@ -1,1 +1,0 @@
-web: gunicorn livreur.wsgi --log-file -
